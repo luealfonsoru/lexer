@@ -1,0 +1,17 @@
+<def,2,1>
+<id,contains,2,5>
+<tk_par_izq,2,13>
+<id,items,2,14>
+<tk_dos_puntos,2,19>
+<tk_par_cua_izq,2,20>
+<int,2,21>
+<tk_par_cua_der,2,24>
+<tk_coma,2,25>
+<id,x,2,27>
+<tk_dos_puntos,2,28>
+<int,2,29>
+<tk_par_der,2,32>
+<tk_ejecuta,2,34>
+<bool,2,37>
+<tk_dos_puntos,2,41>
+>> Error léxico(linea:2,posición:42)
