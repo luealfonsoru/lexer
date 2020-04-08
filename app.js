@@ -40,6 +40,8 @@ function lexer(content) {
         } else if (currentCharacter === " " || currentCharacter === "\0") {
             currentPosition += 1;
             i += 1;
+        } else if(currentCharacter === '\r'){
+            i += 1;
         } else if (charset.special[currentCharacter]) {
             result = analizeSpecial(currentPosition, i, currentCharacter, text)
             currentPosition = result.currentPosition
@@ -55,7 +57,7 @@ function lexer(content) {
             currentPosition += 1;
             i += 1;
             currentCharacter = text[i];
-            while (!endString && currentCharacter !== "\n" && currentCharacter !== "\0") {
+            while (!endString && currentCharacter !== '\n' && currentCharacter !== "\0") {
                 currentCharacter = text[i];
                 nextCharacter = text[i + 1];
                 currentToken = currentToken + currentCharacter;
