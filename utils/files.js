@@ -8,7 +8,7 @@ let currentFile;
 let currentDate;
 
 moment().format()
-currentDate = moment(new Date()).format("DD-MMM-YYYY.HH:mm:ss")
+currentDate = moment(new Date()).format("DD-MMM-YYYY-HH-mm-ss")
 
 function writeContent(content, directoryOutputPath) {
     const currentFolder = `${directoryOutputPath}/${currentDate}`
