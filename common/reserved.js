@@ -1,0 +1,52 @@
+/* Lista de carácteres reservados; para el analizador léxico en comienzo los caracteres reservados son IDs
+luego se analiza si el ID se encuentra en esta lista y si es el caso, el analizador léxico los toma como 
+palabras reservadas; esto permite agregar y eliminar palabras reservadas sin que se afecte la lógica del 
+analizador  */
+const reserved = [
+    "not",
+    "and",
+    "or",
+    "def",
+    "return",
+    "int",
+    "bool",
+    "print",
+    "str",
+    "object",
+    "class",
+    "self",
+    "False",
+    "True",
+    "if",
+    "else",
+    "elif",
+    "__init__",
+    "while",
+    "for",
+    "in",
+    "len",
+    "pass",
+    "None",
+    "input",
+    "as",
+    "assert",
+    "async",
+    "await",
+    "break",
+    "continue",
+    "del",
+    "except",
+    "finally",
+    "from",
+    "global",
+    "import",
+    "is",
+    "lambda",
+    "nonlocal",
+    "raise",
+    "try",
+    "with",
+    "yield"
+]
+
+module.exports = reserved
