@@ -10,8 +10,8 @@ let currentRow;
 let initPosition
 let text;
 
-const directoryInputPath = path.join(__dirname, '/input')
-const directoryOutputPath = path.join(__dirname, '/output')
+const directoryInputPath = path.join(__dirname, 'input')
+const directoryOutputPath = path.join(__dirname, 'output')
 
 readFiles(directoryInputPath, lexer)
 
