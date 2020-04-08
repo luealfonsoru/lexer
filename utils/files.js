@@ -3,6 +3,7 @@ los archivos leídos en la carpeta '/inputs'. Se decidió usar node-dir para la 
 const dir = require('node-dir')
 const fs = require('fs')
 const moment = require('moment')
+const path = require('path')
 
 let currentFile;
 let currentDate;
@@ -11,11 +12,11 @@ moment().format()
 currentDate = moment(new Date()).format("DD-MMM-YYYY-HH-mm-ss")
 
 function writeContent(content, directoryOutputPath) {
-    const currentFolder = `${directoryOutputPath}/${currentDate}`
+    const currentFolder = path.join(directoryOutputPath,currentDate)
     if (!fs.existsSync(currentFolder)){
         fs.mkdirSync(currentFolder);
     }
-    fs.appendFileSync(`${currentFolder}/${currentFile}.result`, `${content}\n`, function (err) {
+    fs.appendFileSync(path.join(currentFolder, `${currentFile}.result`), `${content}\n`, function (err) {
         if (err) throw err;
     });
 }
@@ -23,7 +24,7 @@ function writeContent(content, directoryOutputPath) {
 function readFiles(directoryInputPath, lexer) {
     return dir.readFiles(directoryInputPath,
         function (err, content, filename, next) {
-            currentFile = filename.replace(directoryInputPath + "/", '')
+            currentFile = filename.replace(directoryInputPath, '')
             lexer(content + '\0')
             next()
         },
