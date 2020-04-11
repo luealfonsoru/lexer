@@ -42,6 +42,9 @@ function lexer(content) {
             i += 1;
         } else if(currentCharacter === '\r'){
             i += 1;
+        } else if (currentCharacter === "\t") {
+            currentPosition += 4;
+            i += 1;
         } else if (charset.special[currentCharacter]) {
             result = analizeSpecial(currentPosition, i, currentCharacter, text)
             currentPosition = result.currentPosition
