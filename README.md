@@ -8,4 +8,6 @@ El lexer analizará todos los archivos en la carpeta /input y el resultado será
 
 Este analizador lexico fue creado por Luis Alfonso (luealfonsoru@unal.edu.co), Sergio Rivera (snriverar@unal.edu.co) y Pedro Valderrama (pavalderramat@unal.edu.co)
 
+Link al repositorio https://github.com/luealfonsoru/lexer
+
 
