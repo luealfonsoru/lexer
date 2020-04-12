@@ -12,7 +12,7 @@
     "programing",
     "languages"
   ],
-  "author": "Luis Enrique Alfonso Rubio",
+  "author": "Luis Enrique Alfonso Rubio, Sergio Rivera, Pedro Valderrama",
   "license": "ISC",
   "dependencies": {
     "fs": "0.0.1-security",

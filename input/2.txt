@@ -1,1 +1,10 @@
-2.5598055while3!=88¬56.a
+# S�mbolos
+
+// % != -> < > " " =
+( ) , : . == >= <= 
+[ ] * + - 
+
+# Identificadores
+classic length Class
+identi9 hell�$s
+
