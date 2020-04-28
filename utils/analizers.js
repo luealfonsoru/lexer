@@ -3,7 +3,7 @@ encuentra en app.js*/
 const reserved = require('../common/reserved')
 const charset = require('../common/charset')
 
-function analizeId(currentPosition, i, currentCharacter, text, currentToken) {
+function analizeId(currentPosition, i, currentCharacter, text, currentToken, isSyntactic) {
     let tokenResult;
     while (charset.alphaNumeric.indexOf(currentCharacter) > -1) {
         currentPosition += 1;
@@ -12,7 +12,7 @@ function analizeId(currentPosition, i, currentCharacter, text, currentToken) {
         currentCharacter = text[i]
     }
     if (reserved.indexOf(currentToken) < 0)
-        tokenResult = `id,${currentToken}`
+        tokenResult = isSyntactic ? 'tk_id' : `id,${currentToken}`
     else
         tokenResult = `${currentToken}`
     return { token: tokenResult, currentPosition, i }
@@ -43,4 +43,8 @@ function analizeNumbers(currentPosition, i, currentCharacter, text, currentToken
 
 }
 
-module.exports = { analizeSpecial, analizeId, analizeNumbers }
+function analyzeSyntactic(list){
+    console.log(list)
+}
+
+module.exports = { analizeSpecial, analizeId, analizeNumbers, analyzeSyntactic }

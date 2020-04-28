@@ -4,7 +4,8 @@
   "description": "Analizador lexico",
   "main": "index.js",
   "scripts": {
-    "init": "node app.js"
+    "init:lexer": "node app.js",
+    "init:syntactic": "node syntactic.js"
   },
   "keywords": [
     "lexer",

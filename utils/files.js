@@ -12,8 +12,8 @@ moment().format()
 currentDate = moment(new Date()).format("DD-MMM-YYYY-HH-mm-ss")
 
 function writeContent(content, directoryOutputPath) {
-    const currentFolder = path.join(directoryOutputPath,currentDate)
-    if (!fs.existsSync(currentFolder)){
+    const currentFolder = path.join(directoryOutputPath, currentDate)
+    if (!fs.existsSync(currentFolder)) {
         fs.mkdirSync(currentFolder);
     }
     fs.appendFileSync(path.join(currentFolder, `${currentFile}.result`), `${content}\n`, function (err) {
@@ -21,17 +21,26 @@ function writeContent(content, directoryOutputPath) {
     });
 }
 
-function readFiles(directoryInputPath, lexer) {
+function writeContentSyntactic(list, content, currentFile) {
+    if (!list[currentFile]) {
+        list[currentFile] = []
+    }
+    (list[currentFile]).push(content)
+    return list
+}
+
+function readFiles(directoryInputPath, lexer, isSintactic) {
     return dir.readFiles(directoryInputPath,
         function (err, content, filename, next) {
             currentFile = filename.replace(directoryInputPath, '')
-            lexer(content + '\0')
+            lexer(content + '\0', isSintactic, currentFile)
             next()
         },
         function (err, files) {
-            console.log("¡El analizador léxico ha terminado!, por favor revisar /output para los resultados")
+            if (!isSintactic)
+                console.log("¡El analizador léxico ha terminado!, por favor revisar /output para los resultados")
         }
     )
 }
 
-module.exports = { writeContent, readFiles }
+module.exports = { writeContent, readFiles, writeContentSyntactic }

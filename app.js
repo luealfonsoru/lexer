@@ -2,8 +2,8 @@
 /utils/analizers */
 const charset = require('./common/charset')
 const path = require('path')
-const { analizeSpecial, analizeId, analizeNumbers } = require('./utils/analizers')
-const { readFiles, writeContent } = require('./utils/files')
+const { analizeSpecial, analizeId, analizeNumbers, analyzeSyntactic } = require('./utils/analizers')
+const { readFiles, writeContent, writeContentSyntactic } = require('./utils/files')
 
 let currentPosition;
 let currentRow;
@@ -13,12 +13,13 @@ let text;
 const directoryInputPath = path.join(__dirname, 'input')
 const directoryOutputPath = path.join(__dirname, 'output')
 
-readFiles(directoryInputPath, lexer)
+readFiles(directoryInputPath, lexer, false)
 
 
 
-function lexer(content) {
+function lexer(content, isSyntactic, currentFile) {
     let i = 0
+    let list = {}
     text = content
     currentPosition = 1
     currentRow = 1
@@ -28,29 +29,39 @@ function lexer(content) {
         let result;
         initPosition = currentPosition;
         if (charset.alpha.indexOf(currentCharacter) > -1) {
-            result = analizeId(currentPosition, i, currentCharacter, text, currentToken)
+            result = analizeId(currentPosition, i, currentCharacter, text, currentToken, isSyntactic)
             currentPosition = result.currentPosition
             i = result.i
             currentToken = result.token
-            writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
+            if (isSyntactic != false)
+                list = writeContentSyntactic(list, { token: currentToken, row: currentRow, col: currentPosition }, currentFile)
+            else
+                writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
         } else if (currentCharacter === "\n") {
             currentPosition = 1;
             currentRow += 1;
             i += 1;
+            if (isSyntactic != false)
+                list = writeContentSyntactic(list, { token: 'tk_NEWLINE', row: currentRow, col: currentPosition }, currentFile)
         } else if (currentCharacter === " " || currentCharacter === "\0") {
             currentPosition += 1;
             i += 1;
-        } else if(currentCharacter === '\r'){
+        } else if (currentCharacter === '\r') {
             i += 1;
         } else if (currentCharacter === "\t") {
             currentPosition += 4;
             i += 1;
+            if (isSyntactic != false)
+                list = writeContentSyntactic(list, { token: 'tk_IDENT', row: currentRow, col: currentPosition }, currentFile)
         } else if (charset.special[currentCharacter]) {
             result = analizeSpecial(currentPosition, i, currentCharacter, text)
             currentPosition = result.currentPosition
             i = result.i
             currentToken = result.token
-            writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
+            if (isSyntactic != false)
+                list = writeContentSyntactic(list, { token: currentToken, row: currentRow, col: currentPosition }, currentFile)
+            else
+                writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
         } else if (currentCharacter === `"`) {
             // Los strings tienen una consideración adicional: las comillas dobles no son caracter terminal para string si están precedidos por '\'
             let nextCharacter;
@@ -71,7 +82,7 @@ function lexer(content) {
                     currentToken += nextCharacter
                     currentPosition += 2;
                     i += 2;
-                }else if(currentCharacter === '"'){
+                } else if (currentCharacter === '"') {
                     endString = true
                     currentPosition += 1;
                     i += 1;
@@ -82,10 +93,12 @@ function lexer(content) {
 
             }
             if (currentCharacter === '"') {
-                writeContent(`<tk_cadena,${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
+                isSyntactic !== false ? list = writeContentSyntactic(list, { token: "tk_cadena", row: currentRow, col: currentPosition }, currentFile) :
+                    writeContent(`<tk_cadena,${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
             } else {
                 i = text.length + 1;
-                writeContent(`>> Error léxico(linea:${currentRow},posición:${currentPosition})`, directoryOutputPath)
+                isSyntactic !== false ? null :
+                    writeContent(`>> Error léxico(linea:${currentRow},posición:${currentPosition})`, directoryOutputPath)
             }
         } else if (currentCharacter === "#") {
             while (currentToken !== "\n" && currentToken !== "\0") {
@@ -97,7 +110,8 @@ function lexer(content) {
             currentPosition = result.currentPosition
             i = result.i
             currentToken = result.token
-            writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
+            isSyntactic !== false ? list = writeContentSyntactic(list, { token: currentToken, row: currentRow, col: currentPosition }, currentFile) :
+                writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
         } else if (currentCharacter === '-') {
             // El caracter '-' constituye un caso especial, y se puede convertir en parte de un token numérico, o un token definido en /common/charset.js
             let nextCharacter = text[i + 1];
@@ -109,7 +123,8 @@ function lexer(content) {
                 currentPosition = result.currentPosition
                 i = result.i
                 currentToken = result.token
-                writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
+                isSyntactic !== false ? list = writeContentSyntactic(list, { token: currentToken, row: currentRow, col: currentPosition }, currentFile) :
+                    writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
             } else if (charset.numbers.indexOf(nextCharacter) > -1) {
                 i += 1;
                 currentPosition += 1;
@@ -119,9 +134,11 @@ function lexer(content) {
                 currentPosition = result.currentPosition
                 i = result.i
                 currentToken = result.token
-                writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
+                isSyntactic !== false ? list = writeContentSyntactic(list, { token: currentToken, row: currentRow, col: currentPosition }, currentFile) :
+                    writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
             } else {
-                writeContent(`<tk_menos,${initPosition}>`, directoryOutputPath)
+                isSyntactic !== false? list = writeContentSyntactic(list, { token: 'tk_menos', row: currentRow, col: currentPosition }, currentFile) :
+                    writeContent(`<tk_menos,${initPosition}>`, directoryOutputPath)
                 i += 1;
                 currentToken = text[i];
             }
@@ -136,15 +153,21 @@ function lexer(content) {
                 currentPosition = result.currentPosition
                 i = result.i
                 currentToken = result.token
-                writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
+                isSyntactic !== false ? list = writeContentSyntactic(list, { token: currentToken, row: currentRow, col: currentPosition }, currentFile) :
+                    writeContent(`<${currentToken},${currentRow},${initPosition}>`, directoryOutputPath)
             } else {
                 i = text.length + 1;
-                writeContent(`>> Error léxico(linea:${currentRow},posición:${initPosition})`, directoryOutputPath)
+                isSyntactic !== false ? null :
+                    writeContent(`>> Error léxico(linea:${currentRow},posición:${initPosition})`, directoryOutputPath)
             }
 
         } else {
             i = text.length + 1;
-            writeContent(`>> Error léxico(linea:${currentRow},posición:${initPosition})`, directoryOutputPath)
+            isSyntactic !== false? null :
+                writeContent(`>> Error léxico(linea:${currentRow},posición:${initPosition})`, directoryOutputPath)
         }
     }
+    if (list[currentFile]) analyzeSyntactic(list)
 }
+
+module.exports = { readFiles, directoryInputPath, lexer }
