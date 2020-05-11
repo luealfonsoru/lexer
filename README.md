@@ -3,7 +3,7 @@
 - Descargar e instalar NodeJS y npm
 - Ejecutar "npm install" en consola
 - Ejecutar "npm run init:lexer" en consola para ejecutar el analizador léxico
-- Ejecutar "npm run init:lexer" en consola para ejecutar el analizador sintáctico
+- Ejecutar "npm run init:syntactic" en consola para ejecutar el analizador sintáctico
 
 El lexer analizará todos los archivos en la carpeta /input y el resultado será generado en /output
 El analizador sintáctico mostrará en consola sus resultados, así como ejecutar simultaneamente el analizador léxico

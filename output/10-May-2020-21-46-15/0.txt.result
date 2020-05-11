@@ -1,0 +1,13 @@
+<tk_par_cua_izq,1,1>
+<True,1,2>
+<tk_coma,1,6>
+<False,1,7>
+<tk_coma,1,12>
+<True,1,14>
+<tk_coma,1,18>
+<False,1,20>
+<tk_coma,1,25>
+<tk_cadena,"hola",1,26>
+<tk_coma,1,32>
+<tk_entero,1,1,33>
+<tk_par_cua_der,1,34>

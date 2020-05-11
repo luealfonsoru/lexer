@@ -41,7 +41,7 @@ function analizeNumbers(currentPosition, i, currentCharacter, text, currentToken
         currentToken = currentToken + currentCharacter;
         currentCharacter = text[i]
     }
-    tokenResult = `tk_entero,${currentToken}`
+    tokenResult = `tk_entero`
     return { token: tokenResult, currentPosition, i }
 
 }
@@ -53,7 +53,7 @@ function analyzeSyntactic(list) {
         methods: {
             onLeaveState: function () { },
             onEnterState: function () {
-                console.log(this.state)
+                // console.log(this.state)
             },
             onNewLine: function () { },
         },
@@ -63,11 +63,11 @@ function analyzeSyntactic(list) {
     let hasError = false
     for (let i = 0; i < tokenList.length; i++) {
         let element = tokenList[i]
-        let currentToken = element.token.replace('_', '')
+        let currentToken = element.token.replace(/_/g, '').toLowerCase()
         if (!hasError) {
             try {
                 eval(`fsm.${currentToken}()`)
-            }catch{
+            }catch(error){
                 hasError = true
                 console.log(`${currentFile}: Error sintáctico en la linea ${element.row} en la posición ${element.col}`)
             }
@@ -75,7 +75,7 @@ function analyzeSyntactic(list) {
         }
     }
     if(!hasError){
-        console.log(`El analizador sintáctico ha termiado para ${currentFile} sin errores`)
+        console.log(`¡El analizador sintáctico ha termiado para ${currentFile} sin errores!`)
     }
 }
 
