@@ -2,7 +2,7 @@
 
 function buildStates() {
     let states = [
-        { name: 'tkparcuaizq', from: '*', to: "list" },
+        { name: 'tkparcuaizq', from: 'default', to: "list" },
         { name: 'true', from: 'list', to: "expr" },
         { name: 'false', from: 'list', to: "expr" },
         { name: 'tkentero', from: 'list', to: 'expr'},
