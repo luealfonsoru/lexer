@@ -46,35 +46,40 @@ function analizeNumbers(currentPosition, i, currentCharacter, text, currentToken
 
 }
 
+let hasError = false
+
 function analyzeSyntactic(list) {
-    let fsm = new StateMachine({
+    let fsmExpr = new StateMachine({
         init: 'default',
-        transitions: statesBuilder.buildStates(),
+        transitions: statesBuilder.buildStatesExpr(),
         methods: {
             onLeaveState: function () { },
             onEnterState: function () {
-                // console.log(this.state)
+                //console.log(this.state)
             },
-            onNewLine: function () { },
+            onTransition: function (lifecycle, arg1, arg2) {
+                if (lifecycle.from === 'error' && lifecycle.to === 'error') {
+                    console.log("error de identación")
+                };
+            }
         },
     })
     let tokenList = list[Object.keys(list)[0]]
     let currentFile = Object.keys(list)[0]
-    let hasError = false
     for (let i = 0; i < tokenList.length; i++) {
         let element = tokenList[i]
         let currentToken = element.token.replace(/_/g, '').toLowerCase()
-        if (!hasError) {
+        if (hasError === false) {
             try {
-                eval(`fsm.${currentToken}()`)
-            }catch(error){
+                eval(`fsmExpr.${currentToken}()`)
+            } catch (error) {
                 hasError = true
-                console.log(`${currentFile}: Error sintáctico en la linea ${element.row} en la posición ${element.col}, se esperaba ${fsm.transitions()} y se obtuvo ${currentToken}`)
+                console.log(`${currentFile}: <${element.row},${element.col}> Error sintactico: se encontró ${currentToken}; se esperaba ${fsmExpr.transitions()}`)
             }
 
         }
     }
-    if(!hasError){
+    if (!hasError) {
         console.log(`¡El analizador sintáctico ha termiado para ${currentFile} sin errores!`)
     }
 }
