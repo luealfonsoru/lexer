@@ -1,1 +1,4 @@
-[hola,"hola","hola", 1,2,3,False]
+# Search in a list
+def contains(items:[int], x:int) -> bool:
+	i:int = 0
+	i:int = 0

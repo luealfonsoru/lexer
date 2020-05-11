@@ -105,3 +105,6 @@ dist
 
 #Package lock deleted due to cross platform (WIN, UNIX) issue
 package-lock.json
+
+#output folder
+/output
