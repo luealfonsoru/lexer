@@ -1,4 +1,4 @@
-# Comentario
+
 class animal (object):
     makes_noise : bool = False
 
