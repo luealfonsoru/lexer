@@ -67,6 +67,7 @@ function analyzeSyntactic(list) {
         if (!hasError) {
             try {
                 eval(`fsm.${currentToken}()`)
+                console.log(fsm.state)
             }catch(error){
                 hasError = true
                 console.log(fsm.transitions())

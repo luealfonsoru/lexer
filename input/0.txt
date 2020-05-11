@@ -1,1 +1,2 @@
-[True,False, True, False,"hola",1]
+["hola","hola", 1,2,3]
+[]

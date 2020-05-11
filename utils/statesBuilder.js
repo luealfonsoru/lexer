@@ -7,8 +7,14 @@ function buildStates() {
         { name: 'false', from: 'list', to: "expr" },
         { name: 'tkentero', from: 'list', to: 'expr'},
         { name: 'tkcadena', from: 'list', to: 'expr'},
-        { name: 'tkcoma', from: 'expr', to: 'list' },
+        { name: 'tkcoma', from: 'expr', to: 'exprlist' },
+        { name: 'true', from: 'exprlist', to: "expr" },
+        { name: 'false', from: 'exprlist', to: "expr" },
+        { name: 'tkentero', from: 'exprlist', to: 'expr'},
+        { name: 'tkcadena', from: 'exprlist', to: 'expr'},
         { name: 'tkparcuader', from: 'expr', to: "default" },
+        { name: 'tkparcuader', from: 'list', to: "default" },
+        { name: 'tknewline', from: 'default', to: "default"}
 
     ]
     return states
