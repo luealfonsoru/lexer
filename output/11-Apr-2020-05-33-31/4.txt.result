@@ -1,0 +1,5 @@
+<print,1,10>
+<tk_par_izq,1,15>
+<tk_cadena,"test",1,16>
+<tk_par_der,1,22>
+>> Error léxico(linea:2,posición:1)

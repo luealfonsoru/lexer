@@ -76,8 +76,6 @@ function buildStatesExpr() {
         { name: 'tkdent', from:"defaultdefinition", to:"defaultdefinition"}
 
 
-
-
     ]
     return states
 }
