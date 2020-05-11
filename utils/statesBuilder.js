@@ -94,8 +94,6 @@ function addIdentStates(statesTo, identifier) {
     return newArray;
 }
 
-module.exports = { buildStatesExpr }
-=======
 //Se incluye la lógica para el análsis sintáctico descendente con conjuntos de prediccción - LL(1)
 
 /**
@@ -123,7 +121,7 @@ var EPSILON = "ε";
 
 var firstSets = {};
 var followSets = {};
-var grammar = analyzeSyntactic(tokenlist)
+var grammar = buildStatesExpr()
 
 /**
 
@@ -375,4 +373,4 @@ printSet('Follow sets', followSets);
 
 
 
-module.exports = { buildStates }
+module.exports = { buildStatesExpr }
