@@ -167,6 +167,7 @@ function lexer(content, isSyntactic, currentFile) {
                 writeContent(`>> Error léxico(linea:${currentRow},posición:${initPosition})`, directoryOutputPath)
         }
     }
+    isSyntactic !== false? list = writeContentSyntactic(list, { token: "tkfinal", row: currentRow, col: currentPosition }, currentFile) : null
     if (list[currentFile]) analyzeSyntactic(list)
 }
 
