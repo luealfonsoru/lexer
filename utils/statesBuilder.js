@@ -12,6 +12,8 @@ function buildStates() {
         { name: 'false', from: 'exprlist', to: 'expr' },
         { name: 'tkentero', from: 'exprlist', to: 'expr'},
         { name: 'tkcadena', from: 'exprlist', to: 'expr'},
+        { name: 'tkid', from: 'list', to: 'expr'},
+        { name: 'tkid', from: 'expr', to: 'exprlist'},
         { name: 'tkparcuader', from: 'expr', to: 'default' },
         { name: 'tkparcuader', from: 'list', to: 'default' },
         { name: 'tknewline', from: 'default', to: 'default'},
@@ -23,7 +25,6 @@ function buildStates() {
         { name: 'tkentero', from:'aroperator', to: 'aritmetic'},
         { name: 'tkfinal', from: 'default', to:'default'},
         { name: 'tkfinal', from: 'aritmetic', to:'default'}
-        
 
     ]
     return states
