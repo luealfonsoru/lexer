@@ -1,0 +1,11 @@
+<def,2,1>
+<id,is_even,2,5>
+<tk_par_izq,2,12>
+<id,x,2,13>
+<tk_dos_puntos,2,14>
+<int,2,15>
+<tk_par_der,2,18>
+<tk_ejecuta,2,20>
+<bool,2,23>
+<tk_dos_puntos,2,27>
+>> Error léxico(linea:2,posición:28)
