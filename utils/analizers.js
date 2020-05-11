@@ -67,11 +67,8 @@ function analyzeSyntactic(list) {
         if (!hasError) {
             try {
                 eval(`fsm.${currentToken}()`)
-                console.log(fsm.state)
             }catch(error){
                 hasError = true
-                console.log(fsm.transitions())
-                console.log(fsm.state)
                 console.log(`${currentFile}: Error sintáctico en la linea ${element.row} en la posición ${element.col}, se esperaba ${fsm.transitions()} y se obtuvo ${currentToken}`)
             }
 
