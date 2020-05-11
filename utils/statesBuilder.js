@@ -14,7 +14,9 @@ function buildStates() {
         { name: 'tkcadena', from: 'exprlist', to: 'expr'},
         { name: 'tkparcuader', from: 'expr', to: "default" },
         { name: 'tkparcuader', from: 'list', to: "default" },
-        { name: 'tknewline', from: 'default', to: "default"}
+        { name: 'tknewline', from: 'default', to: "default"},
+        { name: 'tkid', from: 'list', to: 'expr'},
+        { name: 'tkid', from: 'expr', to: 'exprlist'}
 
     ]
     return states
