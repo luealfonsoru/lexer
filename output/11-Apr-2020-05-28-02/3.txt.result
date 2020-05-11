@@ -1,0 +1,7 @@
+<if,1,1>
+<True,1,4>
+<tk_dos_puntos,1,8>
+<print,2,5>
+<tk_par_izq,2,10>
+<tk_cadena,"    uuuuuu",2,11>
+<tk_par_der,2,23>
